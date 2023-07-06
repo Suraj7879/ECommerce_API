@@ -1,20 +1,17 @@
 import motor.motor_asyncio
-from fastapi import FastAPI
-from pydantic import BaseModel, Field
+from fastapi import FastAPI, HTTPException, Query
+from pydantic import BaseModel
 from typing import List, Optional
-from bson.timestamp import Timestamp
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from bson import ObjectId
 from datetime import datetime, timezone
-from fastapi import FastAPI, HTTPException, Query
 
 
 app = FastAPI()
 
-uri = "mongodb+srv://cosmocloud:<password>@cosmocloud.rnm5qgo.mongodb.net/?retryWrites=true&w=majority"
-
 # Create a new client and connect to the server
+uri = "mongodb+srv://cosmocloud:<password>@cosmocloud.rnm5qgo.mongodb.net/?retryWrites=true&w=majority"
 client = motor.motor_asyncio.AsyncIOMotorClient(uri)
 
 db = client["cosmocloud"]
@@ -27,9 +24,11 @@ class Address(BaseModel):
     country: str
     zipCode: int
 
+
 class Items(BaseModel):
     product: str
     quantity: Optional[int]
+
 
 class Order(BaseModel):
     items: List[Items]
@@ -48,7 +47,7 @@ async def all_products():
 async def order(order: Order):
     try:
         order = order.dict()
-        order["timestamp"] = int(datetime.now(timezone.utc).timestamp()) #storing it as epoch seconds, UTC
+        order["timestamp"] = int(datetime.now(timezone.utc).timestamp())  # storing it as epoch seconds, UTC
         result = await orderCollection.insert_one(order)
         print(result)
     except Exception as e:
@@ -86,17 +85,17 @@ async def order(id: str):
         order['_id'] = str(order['_id'])
         return order
     else:
-        return {"message": "Student not found"}
+        return {"message": "Order not found"}
 
 
 @app.put('/product/{id}')
 async def update_product(id: str, updated_fields: dict):
     await productCollection.update_one({"_id": ObjectId(id)}, {"$set": updated_fields})
-    return {"message": "Student updated"}
+    return {"message": "Product updated"}
 
 
 @app.post('/products/')
 async def insert_documents(products: list): 
     result = productCollection.insert_many(products)
     print(result)
-    return {"message": "success"}
+    return {"message": "Success"}
