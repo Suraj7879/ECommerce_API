@@ -58,6 +58,29 @@ uvicorn main:app --reload
 - **Request body:** JSON object representing the order details.
 - **Response:** JSON response indicating the success of the order placement.
 
+#### **Request body should contain**
+
+    ```
+    {
+        "items": [
+            {
+                "product": "Product 1",
+                "quantity": 2
+            },
+            {
+                "product": "Product 2",
+                "quantity": 1
+            }
+        ],
+        "amount": 1000,
+        "address": {
+            "city": "Maihar",
+            "country": "India",
+            "zipCode": 485771
+        }
+    }
+    ```
+
 ### Get all orders
 
 - **Endpoint:** `/orders/`
@@ -92,3 +115,36 @@ uvicorn main:app --reload
 - **Description:** Inserts multiple products into the database.
 - **Request body:** JSON array of product objects.
 - **Response:** JSON response indicating the success of the product insertion.
+
+#### **Request body should contain**
+
+    ```
+    [
+        {
+            "name": "Macbook Air M1",
+            "price": 90000,
+            "quantity": 20
+        },
+        {
+            "name": "Aurdino",
+            "price": 900,
+            "quantity": 200
+        },
+        {
+            "name": "Raspberry Pie",
+            "price": 700,
+            "quantity": 50
+        },
+        {
+            "name": "Sony A95K OLED",
+            "price": 100000,
+            "quantity": 120
+        },
+        {
+            "name": "Apple Mini",
+            "price": 35000,
+            "quantity": 12
+        }
+    ]
+
+    ```
