@@ -1,153 +1,94 @@
-# Roadmap:
+# ECommerce API
 
-########## 1. Product attributes ##########
+This repository contains the code for the ECommerce API, which is a backend server for managing orders and products. It is built using Python, FastAPI, and MongoDB.
 
-# Product Name
+## Prerequisites
 
-# Product Price
+1. FastAPI
+2. Motor (MongoDB driver for asyncio)
 
-# Quantity of the product
+Use the [pip](https://pip.pypa.io/en/stable/) package manager for installing this project
 
-########## 2. New Order ##########
+```bash
+pip install fastapi
+pip install motor
+```
 
-# Timestamp
+## Installation
 
-# Items --> {{product: " ", boughtQuantity: " "}}
+1. Clone the repository:
 
-# Total Amount
+```python
+git clone https://github.com/your-repo-url.git
+```
 
-# Address of the user --> {"city": " ", "country": " ", "zip code": " "}
+2. Install the dependencies:
 
-########## API Endpoints ##########
+```python
+pip install -r requirements.txt
+```
 
-# /listallproducts (GET Req)
+3. Set up MongoDB:
 
-# /order (POST Req)
+## Usage
 
-# /listallorders (GET Req) #Implement pagination using limit and offset.
+1. To start the API server, run the following command:
 
-# /order{ id } (GET Req)
+```bash
+uvicorn main:app --reload
+```
 
-# /update{ id } # (PUT Req) #Available quantity
+2. The API will be available at http://localhost:8000
+3. Access the Builtin API documentation of FastAPI at http://localhost:8000/docs in your web browser.
 
-{
-"name": "Macbook Air M1",
-"price": 90000,
-"quantity": 20
-},
+## API Endpoints
 
-{
-"name": "Aurdino",
-"price": 900,
-"quantity": 200
-},
+### Get all products
 
-{
-"name": "Raspberry Pie",
-"price": 700,
-"quantity": 50
-},
+- **Endpoint:** `/products/`
+- **Method:** GET
+- **Description:** Retrieves all products from the database.
+- **Response:** JSON response containing a list of products.
 
-{
-"name": "Sony A95K OLED",
-"price": 100000,
-"quantity": 120
-},
+### Place an order
 
-{
-"name": "Apple Mini",
-"price": 35000,
-"quantity": 12
-},
+- **Endpoint:** `/order/`
+- **Method:** POST
+- **Description:** Places a new order.
+- **Request body:** JSON object representing the order details.
+- **Response:** JSON response indicating the success of the order placement.
 
-{
-"name": "Apple Smartwatch S8",
-"price": 25000,
-"quantity": 28
-},
+### Get all orders
 
-{
-"name": "iPhone 14 Pro",
-"price": 150000,
-"quantity": 250
-},
+- **Endpoint:** `/orders/`
+- **Method:** GET
+- **Description:** Retrieves a paginated list of all orders.
+- **Query parameters:**
+  - `page` (optional): Page number (default: 1)
+  - `page_size` (optional): Number of orders per page (default: 10)
+- **Response:** JSON response containing the paginated list of orders.
 
-{
-"name": "Nikon D850",
-"price": 130000,
-"quantity": 110
-},
+### Get an order by ID
 
-{
-"name": "Nikon D850",
-"price": 130000,
-"quantity": 110
-},
+- **Endpoint:** `/orders/{id}`
+- **Method:** GET
+- **Description:** Retrieves an order by its ID.
+- **Path parameter:** `id` - The ID of the order.
+- **Response:** JSON response containing the order details.
 
-{
-"name": "Canon EOS R5",
-"price": 78000,
-"quantity": 45
-},
+### Update a product
 
-{
-"name": "iPad",
-"price": 59000,
-"quantity": 11
-},
+- **Endpoint:** `/product/{id}`
+- **Method:** PUT
+- **Description:** Updates a product by its ID.
+- **Path parameter:** `id` - The ID of the product.
+- **Request body:** JSON object representing the updated fields of the product.
+- **Response:** JSON response indicating the success of the product update.
 
-{
-"name": "Samsung S5",
-"price": 88000,
-"quantity": 60
-},
+### Insert multiple products
 
-{
-"name": "Galaxy A54",
-"price": 42000,
-"quantity": 135
-},
-
-{
-"name": "Galaxy M54",
-"price": 51000,
-"quantity": 28
-}
-
-# {
-
-# "items": [
-
-# {
-
-# "product": "ffffffhjksdgfjhagsd",
-
-# "quantity": 2
-
-# }
-
-# {
-
-# "product": "dsfsdafasd",
-
-# "quantity": 2
-
-# }
-
-# ],
-
-# "amount": 300,
-
-# "address": {
-
-# "city": "fdjkfabsdhja",
-
-# "country": "india",
-
-# "zipCode": 222
-
-# }
-
-# }
-
-# {}
+- **Endpoint:** `/products/`
+- **Method:** POST
+- **Description:** Inserts multiple products into the database.
+- **Request body:** JSON array of product objects.
+- **Response:** JSON response indicating the success of the product insertion.

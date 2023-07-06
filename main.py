@@ -96,7 +96,7 @@ async def update_product(id: str, updated_fields: dict):
 
 
 @app.post('/products/')
-async def insert_documents(products: list): # Insert the documents into the collection
+async def insert_documents(products: list): 
     result = productCollection.insert_many(products)
-    # Return a response
+    print(result)
     return {"message": "success"}
